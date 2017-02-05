@@ -188,6 +188,37 @@
     return NO;
 }
 
+    else if ([textField isEqual:[self.mainTextField objectAtIndex:6]]) {
+    
+        int i = (int)[self.mainTextField indexOfObject:textField];
+        
+        NSString* checkSring = [textField.text stringByAppendingString:string];
+        if ([string length] != 1) {
+            checkSring = [checkSring substringToIndex:[checkSring length] -1];
+        }
+        NSCharacterSet* aSet = [NSCharacterSet characterSetWithCharactersInString:@"@"];//набор с символом @
+        NSCharacterSet* illegatSet = [NSCharacterSet characterSetWithCharactersInString:@" !#$%^&*()+={}[]№:;?/\|~`"];
+        NSArray* atCoomponents = [checkSring componentsSeparatedByString:aSet];
+        NSArray* illegatComponents = [ checkSring componentsSeparatedByString:illegatSet];
+        NSLog(@"illegatCompontns - @%", illegatSet);
+        if ([atCoomponents count] > 2 || [illegatComponents count] < 1) {//сокаба вводтися только один раз
+            return NO;
+        }
+        [[self.mainTextField objectAtIndex:i] setText:checkSring];
+        
+        return [checkSring length] <= 19;
+    } else {
+        int i = (int)[self.mainTextField indexOfObject:textField];
+        
+        NSString* checkSring = [textField.text stringByAppendingString:string];
+        
+        if ([string length] != 1) {
+            checkSring = [checkSring substringToIndex:[checkSring length] -1];
+        }
+        [[self.mainTextField objectAtIndex:i] setText:checkSring];
+        
+        return YES;
+    }
 
-
+}
 @end
