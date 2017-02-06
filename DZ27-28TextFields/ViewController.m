@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController ()<UITextFieldDelegate>
 
 @property(assign, nonatomic) int currentNumberOfField;
 
@@ -19,9 +19,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    for (UITextField *field in self.mainTextField) {
-        field.delegate = self;
-    }
+   for (UITextField *field in self.mainTextField) {
+     field.delegate = self;
+   }
+
     
     [[self.mainTextField objectAtIndex:0] becomeFirstResponder];//фокус на первом поле и сразу появляетск клавиатура
 }
@@ -90,7 +91,7 @@
     }
     return YES;
 }
-/*
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField { // метод запрещает редактирование
     self.currentNumberOfField = (int)[self.mainTextField indexOfObject:textField]; // индекс поля в массиве по которому кликнули
     for (int i = 0; i < [self.mainTextField count]; i++) {
@@ -98,10 +99,11 @@
             
             [self setStandartLabels:[self.mainTextField objectAtIndex:i] withConter:i];
         }
-        return YES;
+ 
     }
+ return YES;
 }
-*/
+
 - (BOOL)textFieldShouldClear:(UITextField *)textField {//метод вызывается при нажатии clear button
     textField.text = @"";
     [self setStandartLabels:textField withConter:self.currentNumberOfField];
@@ -110,6 +112,7 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {//вызывается перед тем как мы добавляем символ
+    
     
     if ([textField isEqual:[self.mainTextField objectAtIndex:5]]) {
         int i = (int)[self.mainTextField indexOfObject:textField];
@@ -197,14 +200,14 @@
             checkSring = [checkSring substringToIndex:[checkSring length] -1];
         }
         NSCharacterSet* aSet = [NSCharacterSet characterSetWithCharactersInString:@"@"];//набор с символом @
-        NSCharacterSet* illegatSet = [NSCharacterSet characterSetWithCharactersInString:@" !#$%^&*()+={}[]№:;?/\|~`"];
-        NSArray* atCoomponents = [checkSring componentsSeparatedByString:aSet];
-        NSArray* illegatComponents = [ checkSring componentsSeparatedByString:illegatSet];
-        NSLog(@"illegatCompontns - @%", illegatSet);
-        if ([atCoomponents count] > 2 || [illegatComponents count] < 1) {//сокаба вводтися только один раз
+        NSCharacterSet* illegatSet = [NSCharacterSet characterSetWithCharactersInString:@" !#$%^&*()+={}[]№:;?/|~`"];
+        NSArray* atCoomponents = [checkSring componentsSeparatedByCharactersInSet:aSet];
+        NSArray* illegatComponents = [ checkSring componentsSeparatedByCharactersInSet:illegatSet];
+        NSLog(@"illegatCompontns - %@", illegatSet);
+        if ([atCoomponents count] > 2 || [illegatComponents count] < 1) {//собака вводится только один раз
             return NO;
         }
-        [[self.mainTextField objectAtIndex:i] setText:checkSring];
+        [[self.mainLabels objectAtIndex:i] setText:checkSring];
         
         return [checkSring length] <= 19;
     } else {

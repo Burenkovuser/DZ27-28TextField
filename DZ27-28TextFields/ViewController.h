@@ -10,10 +10,8 @@
 
 @interface ViewController : UIViewController <UITextFieldDelegate>
 
-//@property(weak, nonatomic) IBOutlet UITextField* firstNameField;
-//@property(weak, nonatomic) IBOutlet UITextField* lastNameField;
-@property(weak, nonatomic) IBOutletCollection(UITextField) NSArray *mainTextField;
-@property(weak, nonatomic) IBOutletCollection(UILabel) NSArray *mainLabels;
+@property(strong, nonatomic) IBOutletCollection(UITextField) NSArray *mainTextField;//со строногом работает
+@property(strong, nonatomic) IBOutletCollection(UILabel) NSArray *mainLabels;
 
 
 @end
