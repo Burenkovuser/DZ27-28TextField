@@ -111,6 +111,7 @@
     return NO;
 }
 
+//проверяю на ошибку
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {//вызывается перед тем как мы добавляем символ
     
     
@@ -191,6 +192,7 @@
     return NO;
 }
 
+    
     else if ([textField isEqual:[self.mainTextField objectAtIndex:6]]) {
     
         int i = (int)[self.mainTextField indexOfObject:textField];
@@ -204,7 +206,8 @@
         NSArray* atCoomponents = [checkSring componentsSeparatedByCharactersInSet:aSet];
         NSArray* illegatComponents = [ checkSring componentsSeparatedByCharactersInSet:illegatSet];
         NSLog(@"illegatCompontns - %@", illegatSet);
-        if ([atCoomponents count] > 2 || [illegatComponents count] < 1) {//собака вводится только один раз
+        if ([atCoomponents count] > 2 || [illegatComponents count] > 1) {//собака вводится только один раз
+            
             return NO;
         }
         [[self.mainLabels objectAtIndex:i] setText:checkSring];
@@ -215,13 +218,14 @@
         
         NSString* checkSring = [textField.text stringByAppendingString:string];
         
-        if ([string length] != 1) {
-            checkSring = [checkSring substringToIndex:[checkSring length] -1];
+        if ([string length] != 1) {// условие удаление символа
+            checkSring = [checkSring substringToIndex:[checkSring length] - 1];
         }
-        [[self.mainTextField objectAtIndex:i] setText:checkSring];
+        [[self.mainLabels objectAtIndex:i] setText:checkSring];
         
         return YES;
     }
 
 }
+
 @end
